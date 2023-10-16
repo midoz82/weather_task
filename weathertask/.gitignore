@@ -1,0 +1,22 @@
+.mypy_cache
+.coverage
+htmlcov
+
+
+# virtualenv
+.venv/
+
+
+# Byte-compiled / optimized / DLL files
+.DS_Store
+.pytest_cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+
+# IDE
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/targets.log
