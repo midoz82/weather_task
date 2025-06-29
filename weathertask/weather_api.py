@@ -84,9 +84,7 @@ def insert_into_bigquery(data, target_id, credentials):
 
 @app.get("/")
 async def fetch_and_insert_weather_data(start_date: str, end_date: str, location: str):
-    location = "Sterling%2C%20VA%2C%20US"
-
-    # Fetch weather data
+    # Fetch weather data using the location supplied by the caller
     weather_data = fetch_weather_data(start_date, end_date, location, API_KEY)
 
     # Process weather data
@@ -96,3 +94,12 @@ async def fetch_and_insert_weather_data(start_date: str, end_date: str, location
     insert_into_bigquery(processed_data, BIGQUERY_TARGET_ID, credentials)
 
     return {"message": "Weather data fetched, processed, and inserted into BigQuery."}
+
+
+@app.get("/weather/{location}")
+async def fetch_by_path_location(location: str, start_date: str, end_date: str):
+    """Endpoint allowing the location to be specified as part of the URL path."""
+    weather_data = fetch_weather_data(start_date, end_date, location, API_KEY)
+    processed_data = process_weather_data(weather_data, location)
+    insert_into_bigquery(processed_data, BIGQUERY_TARGET_ID, credentials)
+    return {"message": f"Weather data for {location} fetched and inserted into BigQuery."}

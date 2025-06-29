@@ -27,6 +27,16 @@ to avoid duplciation and idea will be to use a hashing function with the locatio
 To fetch historical weather data, particularly from the previous month, we utilize the following API endpoint:
 https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history
 
+### Service Endpoints
+The FastAPI service exposes two routes:
+
+* `GET /` – supply `start_date`, `end_date`, and `location` as query parameters. Example:
+  `http://localhost:8000/?start_date=2022-01-01&end_date=2022-01-31&location=Berlin,DE`
+* `GET /weather/{location}` – specify the location as part of the path and the dates as query parameters. Example:
+  `http://localhost:8000/weather/Berlin,DE?start_date=2022-01-01&end_date=2022-01-31`
+
+Both endpoints fetch the requested data, process it, and insert the result into the configured BigQuery table.
+
 ## Required Input Parameters
 For this service, please provide the following input data:
 
